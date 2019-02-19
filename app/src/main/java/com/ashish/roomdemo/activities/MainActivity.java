@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 final List<Person> persons = mDb.personDao().loadAllPersons();
                 mAdapter.setTasks(persons);
+
             }
         });
 
