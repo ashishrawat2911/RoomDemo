@@ -22,7 +22,7 @@ import java.util.List;
 
 public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.MyViewHolder> {
     private Context context;
-    private List<Person> personList;
+    private List<Person> mPersonList;
 
     public PersonAdaptor(Context context) {
         this.context = context;
@@ -37,29 +37,25 @@ public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull PersonAdaptor.MyViewHolder myViewHolder, int i) {
-        myViewHolder.name.setText(personList.get(i).getName());
-        myViewHolder.email.setText(personList.get(i).getEmail());
-        myViewHolder.number.setText(personList.get(i).getNumber());
-        myViewHolder.pincode.setText(personList.get(i).getPincode());
-        myViewHolder.city.setText(personList.get(i).getCity());
+        myViewHolder.name.setText(mPersonList.get(i).getName());
+        myViewHolder.email.setText(mPersonList.get(i).getEmail());
+        myViewHolder.number.setText(mPersonList.get(i).getNumber());
+        myViewHolder.pincode.setText(mPersonList.get(i).getPincode());
+        myViewHolder.city.setText(mPersonList.get(i).getCity());
     }
 
     @Override
     public int getItemCount() {
-        if (personList == null) {
+        if (mPersonList == null) {
             return 0;
         }
-        return personList.size();
+        return mPersonList.size();
 
     }
 
     public void setTasks(List<Person> personList) {
-        if(personList.size()==0){
-            this.personList=null;
-        }else {
-            this.personList=personList;
-            notifyDataSetChanged();
-        }
+        mPersonList = personList;
+        notifyDataSetChanged();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -79,7 +75,7 @@ public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.MyViewHold
             editImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int elementId = personList.get(getAdapterPosition()).getId();
+                    int elementId = mPersonList.get(getAdapterPosition()).getId();
                     Intent i = new Intent(context, EditActivity.class);
                     i.putExtra(Constants.UPDATE_Person_Id, elementId);
                     context.startActivity(i);
@@ -92,7 +88,7 @@ public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.MyViewHold
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
-                            mDb.personDao().delete(personList.get(getAdapterPosition()));
+                            mDb.personDao().delete(mPersonList.get(getAdapterPosition()));
                         }
                     });
                 }

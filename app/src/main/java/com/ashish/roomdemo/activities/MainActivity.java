@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         floatingActionButton = findViewById(R.id.addFAB);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize the adapter and attach it to the RecyclerView
         mAdapter = new PersonAdaptor(this);
         mRecyclerView.setAdapter(mAdapter);
-
         mDb = AppDatabase.getInstance(getApplicationContext());
     }
 
@@ -58,8 +58,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final List<Person> persons = mDb.personDao().loadAllPersons();
-                mAdapter.setTasks(persons);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        mAdapter.setTasks(persons);
+                    }
+                });
             }
         });
 
