@@ -20,7 +20,7 @@
             android:background="@drawable/border"
             android:hint="Enter name"
             android:inputType="text"
-            android:padding="50dp" />
+            android:padding="20dp" />
 
         <EditText
             android:id="@+id/edit_email"
@@ -32,7 +32,7 @@
             android:background="@drawable/border"
             android:hint="Enter email"
             android:inputType="textEmailAddress"
-            android:padding="50dp" />
+            android:padding="20dp" />
 
         <EditText
             android:id="@+id/edit_number"
@@ -44,7 +44,7 @@
             android:background="@drawable/border"
             android:hint="Enter number"
             android:inputType="phone"
-            android:padding="50dp" />
+            android:padding="20dp" />
 
         <EditText
             android:id="@+id/edit_pincode"
@@ -56,7 +56,7 @@
             android:background="@drawable/border"
             android:hint="Enter pincode"
             android:inputType="number"
-            android:padding="50dp" />
+            android:padding="20dp" />
 
         <EditText
             android:id="@+id/edit_city"
@@ -67,7 +67,7 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/border"
             android:hint="Enter city"
-            android:padding="50dp" />
+            android:padding="20dp" />
 
         <Button
             android:id="@+id/button"
@@ -76,7 +76,7 @@
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:background="@drawable/border_back"
-            android:padding="50dp"
+            android:padding="20dp"
             android:text="Save" />
     </LinearLayout>
 </ScrollView>
