@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.ashish.roomdemo.R;
@@ -45,6 +46,28 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new PersonAdaptor(this);
         mRecyclerView.setAdapter(mAdapter);
         mDb = AppDatabase.getInstance(getApplicationContext());
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            // Called when a user swipes left or right on a ViewHolder
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                // Here is where you'll implement swipe to delete
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int position = viewHolder.getAdapterPosition();
+                        List<Person> tasks = mAdapter.getTasks();
+                        mDb.personDao().delete(tasks.get(position));
+                        retrieveTasks();
+                    }
+                });
+            }
+        }).attachToRecyclerView(mRecyclerView);
+
     }
 
     @Override

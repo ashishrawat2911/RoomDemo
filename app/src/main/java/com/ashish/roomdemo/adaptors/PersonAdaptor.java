@@ -58,9 +58,14 @@ public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.MyViewHold
         notifyDataSetChanged();
     }
 
+    public List<Person> getTasks() {
+
+        return mPersonList;
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name, email, pincode, number, city;
-        ImageView editImage, deleteImage;
+        ImageView editImage;
         AppDatabase mDb;
 
         MyViewHolder(@NonNull final View itemView) {
@@ -79,18 +84,6 @@ public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.MyViewHold
                     Intent i = new Intent(context, EditActivity.class);
                     i.putExtra(Constants.UPDATE_Person_Id, elementId);
                     context.startActivity(i);
-                }
-            });
-            deleteImage = itemView.findViewById(R.id.delete_person_image);
-            deleteImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            mDb.personDao().delete(mPersonList.get(getAdapterPosition()));
-                        }
-                    });
                 }
             });
         }
